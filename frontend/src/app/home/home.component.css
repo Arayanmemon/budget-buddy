@@ -1,0 +1,12 @@
+.menu{
+        left: 0;
+}
+
+.menu.closed{
+        left: -900px;
+}
+
+.features{
+        background-image: url("../../assets/featuresbg.png");
+        background-size: cover;
+}

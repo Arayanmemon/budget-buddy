@@ -1,0 +1,173 @@
+<div class="flex">
+    <div class="h-[100vh] w-[12vw] bg-[#1A1818D9] px-2 py-4 text-white hidden sm:block">
+        <img src="../../assets/transparent 1.png" alt="">
+        <div class="flex flex-col mt-10 mx-5 space-y-5">
+            <div>Home</div>
+            <div>Account</div>
+            <div>Chat</div>
+            <div>Transaction</div>
+        </div>
+    </div>
+    <div class="sm:h-[100vh] h-auto w-[100vw] sm:w-[60vw] bg-[#23152E] px-4 text-white">
+        <!-- Navbar -->
+        <div class="flex justify-between items-center my-4">
+            <div class="flex space-x-2 items-center">
+                <img class="" src="../../assets/user.png" alt="" height="50" width="50">
+                <h2 class="sm:text-lg">{{email}}</h2>
+            </div>
+
+            <div>
+                <p>{{date.toDateString()}}</p>
+            </div>
+
+            <div>
+                <button class="bg-black px-4 py-2 rounded-md" (click)="logOut()">Logout</button>
+            </div>
+        </div>
+
+        <!-- 2 Upper cards -->
+        <div class="flex sm:space-x-6 flex-col space-y-4 sm:space-y-0 sm:flex-row">
+            <div class="rounded-lg sm:w-[25rem] w-[90vw] h-[12rem] p-4 text-center bg-[#504659] drop-shadow-md">
+                <h2 class="text-3xl my-4">Welcome Back</h2>
+                <p class="text-2xl">{{title}}</p>
+            </div>
+            <div class="rounded-lg sm:w-[25rem] w-[90vw] h-[12rem] p-4 bg-[#504659] drop-shadow-md">
+                <h2 class="text-xl mb-4">Latest Transaction</h2>
+                <div class="flex justify-between my-3">
+                    <p>{{trans2[1]}}</p> 
+                    <span class="rounded-xl bg-red-200 px-3 text-black text-sm">{{trans2[0]}} pkr</span>
+                </div>
+                <div class="flex justify-between my-3">
+                    <p>{{trans1[1]}}</p> 
+                    <span class="rounded-xl bg-red-200 px-3 text-black text-sm">{{trans1[0]}} pkr</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3 Central cards -->
+        <div class="flex sm:space-x-6 space-y-3 sm:space-y-0 flex-col items-center  sm:flex-row my-10">
+            <div class="rounded-lg w-[16rem] h-[10rem] p-4 bg-[#504659] drop-shadow-md">
+                <h2 class="text-2xl">Total Balance</h2>
+                <div class="flex justify-between my-6">
+                    <p class="text-xl">{{totalAmount}}</p>
+                    <button>+</button>
+                </div>
+            </div>
+
+            <div class="rounded-lg w-[16rem] h-[10rem] p-4 bg-[#504659] drop-shadow-md">
+                <h2 class="text-2xl">Income</h2>
+                <div class="flex justify-between my-6">
+                    <p class="text-xl">{{income}}</p>
+                    <button (click)="toggleModalIncome()">+</button>
+                </div>
+            </div>
+
+            <div class="rounded-lg w-[16rem] h-[10rem] p-4 bg-[#504659] drop-shadow-md">
+                <h2 class="text-2xl">Expense</h2>
+                <div class="flex justify-between my-6">
+                    <p class="text-xl">{{totalTransactions}}</p>
+                    <button (click)="toggleModalExpense()">+</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="h-[100vh] w-[28vw] bg-[#1A1818D9] px-2 py-6 text-white hidden sm:block">
+        <div class="flex flex-col">
+            <div class="my-4 px-8 text-center">
+                <h2 class="my-2 text-2xl">BudgetBuddy AI</h2>
+                <p class="my-4 text-sm">Hello I am your personal Assitant, I would love to help you in tracking your Finances.</p>
+            </div>
+
+            <div class="min-h-[67vh]" id="chat">
+                <app-recieved></app-recieved>
+                <app-sent></app-sent>
+            </div>
+
+            <div class="">
+                <input type="text" class="rounded-lg w-[90%] py-1 px-2 text-black" placeholder="Write your message here" #message>
+                <button class="mx-2" (click)="sendmsg(message.value)"><img src="../../assets/send-fill 1.png" alt=""></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<!-- Income Modal -->
+  <div *ngIf="showModalIncome" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+    <div class="relative w-auto my-6 mx-auto max-w-6xl">
+      <!--content-->
+      <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+        <!--header-->
+        <div class="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+          <h3 class="text-3xl font-semibold">
+            Add Expense
+          </h3>
+          <button class="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="toggleModalIncome()">
+            <span class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+              ×
+            </span>
+          </button>
+        </div>
+        <!--body-->
+        <div class="relative p-6 flex-auto">
+          <input type="text" class="bg-gray-200 p-2" placeholder="Enter Name" #name> <br>
+          <input type="text" class="bg-gray-200 mt-2 p-2" placeholder="Enter Category" #category> <br>
+          <input type="text" class="bg-gray-200 mt-2 p-2" placeholder="Enter Amount" #amount>
+        </div>
+        <!--footer-->
+        <div class="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+          <button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="toggleModalIncome()">
+            Close
+          </button>
+          <button (click)="addBudget(name.value, category.value, amount.value)" class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="toggleModalIncome()">
+            Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="showModalIncome" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
+
+
+<!-- Expense Modal -->
+  <div *ngIf="showModalExpense" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+    <div class="relative w-auto my-6 mx-auto max-w-6xl">
+      <!--content-->
+      <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+        <!--header-->
+        <div class="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+          <h3 class="text-3xl font-semibold">
+            Add Expense
+          </h3>
+          <button class="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="toggleModalExpense()">
+            <span class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+              ×
+            </span>
+          </button>
+        </div>
+        <!--body-->
+        <div class="relative p-6 flex-auto">
+          <input type="text" class="bg-gray-200 p-2" placeholder="Enter amount" #expense> <br>
+          <input type="text" class="bg-gray-200 mt-2 p-2" placeholder="Enter Category" #category> <br>
+          <input type="text" class="bg-gray-200 mt-2 p-2" placeholder="Enter Payment Method" #payment>
+        </div>
+        <!--footer-->
+        <div class="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+          <button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="toggleModalExpense()">
+            Close
+          </button>
+          <button (click)="addTransaction(expense.value, category.value, payment.value)" class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="toggleModalExpense()">
+            Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="showModalExpense" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
